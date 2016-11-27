@@ -3,14 +3,34 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
-  View
+  View,
+  Image,
+  ListView
 } from 'react-native';
 
+// import seed data
+import contactsData from './contactsData'
+
+// ContactList component
+class ContactList extends Component {
+  render() {
+    return (
+      <ListView
+        dataSource={this.props.dataSource}
+        renderRow={data => <Text>{data.firstName}</Text>}
+        />
+    )
+  }
+}
+
+// ContactApp component
 export default class ContactApp extends Component {
   constructor(props){
     super(props)
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
     this.state = {
-      contacts: [],
+      contacts: contactsData,
+      dataSource: ds.cloneWithRows(contactsData),
       searchTerm: '',
     }
   }
@@ -18,7 +38,8 @@ export default class ContactApp extends Component {
   render() {
     return (
       <View>
-        <ContactList />
+        <ContactList
+          dataSource={this.state.dataSource} />
       </View>
     )
   }
