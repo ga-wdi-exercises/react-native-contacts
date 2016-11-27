@@ -11,13 +11,25 @@ import {
 // import seed data
 import contactsData from './contactsData'
 
+// Row component
+const Row = props => {
+  let {imageUrl, firstName, lastName } = props.contact
+  let name = `${firstName} ${lastName}`
+  return (
+    <View style={styles.rowContainer}>
+      <Image style={styles.rowPhoto} source={{uri: imageUrl}} />
+      <Text style={styles.rowText}>{name}</Text>
+    </View>
+  )
+}
+
 // ContactList component
 class ContactList extends Component {
   render() {
     return (
       <ListView
         dataSource={this.props.dataSource}
-        renderRow={data => <Text>{data.firstName}</Text>}
+        renderRow={data => <Row contact={data} />}
         />
     )
   }
@@ -44,5 +56,24 @@ export default class ContactApp extends Component {
     )
   }
 }
+
+// App Styles
+const styles = StyleSheet.create({
+  rowContainer: {
+    flex: 1,
+    padding: 12,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  rowText: {
+    marginLeft: 12,
+    fontSize: 16,
+  },
+  rowPhoto: {
+    height: 40,
+    width: 40,
+    borderRadius: 20,
+  },
+})
 
 AppRegistry.registerComponent('ContactApp', () => ContactApp);
