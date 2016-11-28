@@ -30,7 +30,8 @@ class ContactList extends Component {
       <ListView
         dataSource={this.props.dataSource}
         renderRow={data => <Row contact={data} />}
-        />
+        renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}
+       />
     )
   }
 }
@@ -74,6 +75,11 @@ const styles = StyleSheet.create({
     width: 40,
     borderRadius: 20,
   },
+  separator: {
+    flex: 1,
+    height: StyleSheet.hairlineWidth,
+    backgroundColor: '#8E8E8E',
+  }
 })
 
 AppRegistry.registerComponent('ContactApp', () => ContactApp);
